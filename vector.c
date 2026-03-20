@@ -19,8 +19,9 @@ static int vector_ensure_capacity(Vector* vec, size_t new_capacity) {
     return 0;
 }
 
-//Основные функции вектора
+// == Основные функции вектора ==
 
+//создание нового вектора
 Vector* vector_create(const TypeInfo* type_info, size_t initial_capacity) {
     if (type_info == NULL) {
         return NULL;
@@ -47,6 +48,7 @@ Vector* vector_create(const TypeInfo* type_info, size_t initial_capacity) {
     return vec;
 }
 
+//уничтожение вектора и освобождение памяти
 void vector_destroy(Vector* vec) {
     if (vec == NULL) {
         return;
@@ -57,6 +59,7 @@ void vector_destroy(Vector* vec) {
     free(vec);
 }
 
+//добавление элемента в вектор
 void vector_push(Vector* vec, const void* element) {
     if (vec == NULL || element == NULL) {
         return;
@@ -73,12 +76,15 @@ void vector_push(Vector* vec, const void* element) {
     vec->size++;
 }
 
+//получение элемента по индексу (возврат указателя)
 void* vector_get(const Vector* vec, size_t index) {
     if (vec==NULL || index >= vec->size) {
         return NULL;
     }
     return (char*)vec->data + (index * vec->type_info->element_size);
 }
+
+//получение текущего размера вектора
 size_t vector_size(const Vector* vec) {
     if (vec == NULL) {
         return 0;
@@ -93,6 +99,7 @@ const TypeInfo* vector_get_type_info(const Vector* vec) {
     return vec->type_info;
 }
 
+//очистка вектора (без освобождения памяти)
 void vector_clear(Vector* vec) {
     if (vec == NULL) {
         return;
@@ -100,6 +107,7 @@ void vector_clear(Vector* vec) {
     vec->size = 0;
 }
 
+//копирование вектора
 Vector* vector_copy(const Vector* vec) {
     if (vec == NULL) {
         return NULL;
@@ -117,7 +125,10 @@ Vector* vector_copy(const Vector* vec) {
 
     return copy;
 }
-//операции для варианта 1
+
+// == Операции для варианта 1 ==
+
+//сложение векторов
 Vector* vector_add(const Vector* v1, const Vector* v2) {
     if (v1 == NULL || v2 == NULL) {
         return NULL;
@@ -154,6 +165,7 @@ Vector* vector_add(const Vector* v1, const Vector* v2) {
     return result;
 }
 
+//скалярное произведение векторов
 void vector_scalar_product(const Vector* v1, const Vector* v2, void* result) {
     if (v1==NULL || v2==NULL || result==NULL) {
         return;
@@ -189,48 +201,4 @@ void vector_scalar_product(const Vector* v1, const Vector* v2, void* result) {
     v1->type_info->dealloc(product);
     v1->type_info->dealloc(sum);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
