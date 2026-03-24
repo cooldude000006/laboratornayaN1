@@ -202,3 +202,5 @@ void vector_scalar_product(const Vector* v1, const Vector* v2, void* result) {
     v1->type_info->dealloc(sum);
 }
 
+
+
