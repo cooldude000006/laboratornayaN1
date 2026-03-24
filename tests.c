@@ -189,9 +189,9 @@ void test_scalar_product_double() {
     tests_passed++;
 }
 
-//тест 8: пустой вектор
+//тест 8: скалярное произведение = 0
 void test_empty_vector() {
-    printf("тест8: пустой вектор: ");
+    printf("тест8: скалярное произведение = 0: ");
 
     const TypeInfo* info = get_int_type_info();
     Vector* v1 = vector_create(info,0);
@@ -209,6 +209,26 @@ void test_empty_vector() {
     tests_passed++;
 }
 
+//тест 9: 0 длина векторов (сложение 2х пустых векторов)
+void test_add_empty_vectors() {
+    printf("тест9: 0 длина векторов (сложение 2х пустых векторов): ");
+
+    const TypeInfo* info = get_int_type_info();
+    Vector* v1 = vector_create(info,5);
+    Vector* v2 = vector_create(info,5);
+
+    Vector* result = vector_add(v1, v2);
+
+    assert(result != NULL);
+    assert(vector_size(result)==0);
+
+    vector_destroy(v1);
+    vector_destroy(v2);
+    vector_destroy(result);
+    printf("PASSED\n");
+    tests_passed++;
+}
+
 //функция запуска всех тестов
 void run_all_tests() {
     printf("запуск модульных тестов ...\n");
@@ -221,6 +241,7 @@ void run_all_tests() {
     test_size_mismatch();
     test_scalar_product_double();
     test_empty_vector();
+    test_add_empty_vectors();
 
     printf("итоги тестов\n");
     printf("Пройдено: %d\n", tests_passed);
@@ -234,39 +255,5 @@ void run_all_tests() {
     }
     printf("\n");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
