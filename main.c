@@ -35,12 +35,19 @@ void print_vector(const Vector* vec) {
 Vector* input_vector(const TypeInfo* type_info) {
     size_t size;
 
-    printf("введите размер вектора: ");
+    while (1) {
+        printf("введите размера вектора: ");
+        if (scanf("%zu", &size) != 1) {
+            printf("ошибка: введите положительное число\n");
+            clear_input_buffer();
+            continue;
+        }
+        if (size == 0) {
+            printf("ошибка: размер должен быть больше 0\n");
+            continue;
+        }
+        break;
 
-    if (scanf("%zu",&size)!=1 || size == 0) {
-        printf("ошибка ввода, число должно быть положительным\n");
-        clear_input_buffer();
-        return NULL;
     }
 
     Vector* vec = vector_create(type_info,size);
@@ -67,7 +74,7 @@ Vector* input_vector(const TypeInfo* type_info) {
                 return NULL;
             }
         }else {
-            if (scanf("%d", (int*)elem)!=1) {
+            if (scanf("%lf", (double*)elem)!=1) {
                 printf("ошибка ввода элемента\n");
                 clear_input_buffer();
                 type_info->dealloc(elem);
@@ -142,7 +149,7 @@ int main(void) {
                 break;
 
             case 2:
-                if (v2) {
+                if (v1) {
                     vector_destroy(v1);
                 }
                 current_type = get_double_type_info();
@@ -245,21 +252,5 @@ int main(void) {
         getchar();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
